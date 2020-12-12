@@ -133,16 +133,16 @@ const steadyStateCalculator = (seatingPlan) => {
 
 // console.log(steadyStateCalculator(testSeatPlan))
 
-// const steadyStatePlan = steadyStateCalculator(seatingPlan)
+const steadyStatePlan = steadyStateCalculator(seatingPlan)
 
-// let occupiedSeatCount = 0 
-// for (index = 0; index < steadyStatePlan.length; index++) {
-//     for (jindex = 0; jindex < steadyStatePlan[0].length; jindex++) {
-//         if (steadyStatePlan[index][jindex] === '#') occupiedSeatCount += 1
-//     }
-// }
+let occupiedSeatCount = 0 
+for (index = 0; index < steadyStatePlan.length; index++) {
+    for (jindex = 0; jindex < steadyStatePlan[0].length; jindex++) {
+        if (steadyStatePlan[index][jindex] === '#') occupiedSeatCount += 1
+    }
+}
 
-// console.log(occupiedSeatCount)
+console.log(occupiedSeatCount)
 
 // part two
 
@@ -162,6 +162,66 @@ const calculateSeatOutputUpdated = (currSeatVal, adjacentSeatArr) => {
     return currSeatVal
 }
 
+const diffCalc = (idx, jdx) => {
+    let yIndex = 0
+    let xIndex = 0
+    // top left
+    if (idx === 0 && jdx === 0) {
+        yIndex -= 1
+        xIndex -= 1
+        // console.log('top left')
+    } 
+    
+    // top
+    if (idx === 0 && jdx === 1) {
+        yIndex -= 1
+        // console.log('top')
+    } 
+
+    // top right
+    if (idx === 0 && jdx === 2) {
+        yIndex -= 1
+        xIndex += 1
+        // console.log('top right')
+    } 
+
+    // left
+    if (idx === 1 && jdx === 0) {
+        xIndex -= 1
+        // console.log('left')
+    } 
+
+    // right
+    if (idx === 1 && jdx === 2) {
+        xIndex += 1
+        // console.log('right')
+    }
+
+    // bottom left
+    if (idx === 2 && jdx === 0) {
+        yIndex += 1
+        xIndex -= 1
+        // console.log('bottom left')
+    } 
+    
+    // bottom
+    if (idx === 2 && jdx === 1) {
+        yIndex += 1
+        // console.log('bottom')
+    } 
+
+    // bottom right
+    if (idx === 2 && jdx === 2) {
+        yIndex += 1
+        xIndex += 1
+        // console.log('bottom right')
+    } 
+
+    return {
+        xDiff: xIndex,
+        yDiff: yIndex,
+    }
+}
 
 const seatStateModifierUpdated = (seatingPlan) => {
     const newSeatPlan = []
@@ -193,57 +253,13 @@ const seatStateModifierUpdated = (seatingPlan) => {
                                     foundSeat = true
                                     adjacentSeats.push(adjacentSeatVal)
                                 } else {
-                                    // top left
-                                    if (idx === 0 && jdx === 0) {
-                                        yIndex -= 1
-                                        xIndex -= 1
-                                        // console.log('top left')
-                                    } 
-                                    
-                                    // top
-                                    if (idx === 0 && jdx === 1) {
-                                        yIndex -= 1
-                                        // console.log('top')
-                                    } 
+                                    const {
+                                        xDiff,
+                                        yDiff,
+                                    } = diffCalc(idx, jdx)
 
-                                    // top right
-                                    if (idx === 0 && jdx === 2) {
-                                        yIndex -= 1
-                                        xIndex += 1
-                                        // console.log('top right')
-                                    } 
-
-                                    // left
-                                    if (idx === 1 && jdx === 0) {
-                                        xIndex -= 1
-                                        // console.log('left')
-                                    } 
-
-                                    // right
-                                    if (idx === 1 && jdx === 2) {
-                                        xIndex += 1
-                                        // console.log('right')
-                                    }
-
-                                    // bottom left
-                                    if (idx === 2 && jdx === 0) {
-                                        yIndex += 1
-                                        xIndex -= 1
-                                        // console.log('bottom left')
-                                    } 
-                                    
-                                    // bottom
-                                    if (idx === 2 && jdx === 1) {
-                                        yIndex += 1
-                                        // console.log('bottom')
-                                    } 
-
-                                    // bottom right
-                                    if (idx === 2 && jdx === 2) {
-                                        yIndex += 1
-                                        xIndex += 1
-                                        // console.log('bottom right')
-                                    } 
+                                    yIndex += yDiff
+                                    xIndex += xDiff
                                 }
                             }
                         }
@@ -281,7 +297,7 @@ const steadyStateCalculatorUpdated = (seatingPlan) => {
 
         tmpSeatPlan = newSeatPlan
         tmpSeatChangeCount = seatChangeCount
-        console.log(tmpSeatPlan)
+        // console.log(tmpSeatPlan)
     }
 
     return tmpSeatPlan
@@ -291,13 +307,13 @@ const steadyStateCalculatorUpdated = (seatingPlan) => {
 // console.log(seatStateModifierUpdated(testSeatPlan))
 // console.log(steadyStateCalculatorUpdated(testSeatPlan))
 
-const steadyStatePlan = steadyStateCalculatorUpdated(seatingPlan)
+const steadyStatePlanUpdated = steadyStateCalculatorUpdated(seatingPlan)
 
-let occupiedSeatCount = 0 
-for (index = 0; index < steadyStatePlan.length; index++) {
-    for (jindex = 0; jindex < steadyStatePlan[0].length; jindex++) {
-        if (steadyStatePlan[index][jindex] === '#') occupiedSeatCount += 1
+let occupiedSeatCountUpdated = 0 
+for (index = 0; index < steadyStatePlanUpdated.length; index++) {
+    for (jindex = 0; jindex < steadyStatePlanUpdated[0].length; jindex++) {
+        if (steadyStatePlanUpdated[index][jindex] === '#') occupiedSeatCountUpdated += 1
     }
 }
 
-console.log(occupiedSeatCount)
+console.log(occupiedSeatCountUpdated)
