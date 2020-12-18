@@ -487,7 +487,7 @@ const parsePossibleValues = (possibleValues) => {
 }
 
 // console.log(parsePossibleValues(testValues))
-// console.log(parsePossibleValues(possibleValues)) 
+console.log(parsePossibleValues(possibleValues)) 
 
 // 'departure location': [ 18 ],
 // 'departure station': [ 17 ],
